@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+This package contains a JSON Editor component which can be used to edit any JSON compatible JavaScript object from within the browser. Currently this implementation is available only for react projects.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Live demo:
 
-## Available Scripts
+This component is used in following chrome extension for editing the objects stored in index db by the user:
 
-In the project directory, you can run:
+https://chrome.google.com/webstore/detail/dev-assistant-modify-requ/omjocblcimogflgejnnadnmbfmngblmd?utm_source=jec
 
-### `npm start`
+# Installation:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+If you have an existing react application, run the following commands to download the JSON Editor component.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+    npm install react-json-editor@latest --save
 
-### `npm test`
+## Sample usage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```jsx
+import React, { PureComponent } from 'react';
+import JSONEditor from 'react-json-editor';
 
-### `npm run build`
+class App extends PureComponent {
+    state = {
+        objectToEdit: {
+            aString: 'Some string',
+            aNumber: 123.45,
+            aLink: 'https://www.google.com',
+            aNull: null,
+            anUndefined: undefined,
+            object: {
+                anArray: [
+                    new Date(),
+                    { string: 'Some other string' }
+                ]
+            }
+        }
+    };
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    setValue = (value) => this.setState({ objectToEdit: value });
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    render() {
+        const { objectToEdit } = this.state;
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+        return (
+            <JSONEditor
+                value={objectToEdit}
+                onChange={this.setValue}
+            />
+        );
+    }
+}
 
-### `npm run eject`
+export default App;
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Sample Output
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![alt](/JE_Sample.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Features:
+* Supports viewing JS Object / JSON in tree format.
+* Supports editing datatypes like String, Number, DateTime, Object, Array, null & undefined.
+* Supports expanding and collapsing of Array and Objects
+* Can automatically identify what type of data is being entered by the user and automatically convert the data to appropriate datatype.
+* Support editing any property name or values of both objects and array's.
+* Support inserting of new item or removing an existing item from an array.
+* Support adding a new property or remove an existing property from an object.
+* Identify the url stored as value and highlight it for visual difference.
+* Easily customize colors, styles, size and icons by just overriding the css.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Usage:
 
-## Learn More
+This component can be used in your page where you would like the JSON Editor to be rendered to the end user. This component would expect the JavaScript object to be passed as value. Raw JSON is not accepted and instad would be considered as a string. If you currently have the JSON string, then use JSON.parse() function to parse the JSON and then pass the resulting object to this component.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Params | Type | Default | Usage | Description |
+| ------ | ---- | ------------- | ----- | ----------- |
+| value | any | - | required | The Javascript object to be edited. This can be any object which is JSON compatible |
+| onChange | function | - | required | A callback function which would be called everytime the object is edited by the user |
+| ***editable* | bool | - | optional | This would let you to disable editing of the object and make the object readonly  |
+| ***allowRemove* | bool | - | optional | This would let you control if the user is allowed to remove the existing properties or not.  |
+| ***allowInsert* | bool | - | optional | This would let you control if the user is allowed to create a new property or not.  |
+| ***isValidName* | function | - | optional | This callback would help to validate if the user had provided a valid key name. This function would receive two params (i.e. name and path). Should return a boolean value indicating if the name is accepted or can return a modified name to set the new name |
+| ***parseValue* | function | - | optional | This callback would be called with the data the user has provided. You can parse the data and return appropriate object back. If this callback is used then datatype will not be auto detected. Instead, the value returned will be set. |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+** Marked properties are not yet available for usage in the current version and is planned for implementation in upcomming versions. For prioritizing the mentioned features or to suggest a new feature please raise a ticket in GitHub repository.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Inspiration
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The styling was based on the inspiration from following package available for angular: https://www.npmjs.com/package/jsonformatter
