@@ -54,7 +54,7 @@ export default App;
 
 ## Sample Output
 
-![alt](/JE_Sample.png)
+![alt](/JE_Sample.PNG)
 
 ## Features:
 * Supports viewing JS Object / JSON in tree format.
