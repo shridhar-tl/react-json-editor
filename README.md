@@ -1,22 +1,25 @@
-This package contains a JSON Editor component which can be used to edit any JSON compatible JavaScript object from within the browser. Currently this implementation is available only for react projects.
+This package contains a JSON Editor component which can be used to edit any JSON compatible JavaScript object from within the browser. Currently this implementation is available only for react projects. This is a simple and tiny react component which is just ~16kb (~4kb gz) package and do not have any external dependency except React.
 
 # Live demo:
 
-This component is used in following chrome extension for editing the objects stored in index db by the user:
+This component is used in following chrome extension for viewing and editing the objects stored in index db by any websites:
 
 https://chrome.google.com/webstore/detail/dev-assistant-modify-requ/omjocblcimogflgejnnadnmbfmngblmd?utm_source=jec
 
 # Installation:
 
 If you have an existing react application, run the following commands to download the JSON Editor component.
-
-    npm install react-json-editor@latest --save
+```
+npm i react-json-editor@latest --save
+```
+Once installed you can import this component along with its styles and you are done.
 
 ## Sample usage
 
 ```jsx
 import React, { PureComponent } from 'react';
 import JSONEditor from 'react-json-editor';
+import 'react-json-editor/css/style.css';
 
 class App extends PureComponent {
     state = {
@@ -86,4 +89,4 @@ This component can be used in your page where you would like the JSON Editor to 
 
 ## Inspiration
 
-The styling was based on the inspiration from following package available for angular: https://www.npmjs.com/package/jsonformatter
+Styles are inspired from JSON Viewer component available for Angular: https://www.npmjs.com/package/jsonformatter
