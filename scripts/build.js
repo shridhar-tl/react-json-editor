@@ -28,6 +28,10 @@ const printHostingInstructions = require('react-dev-utils/printHostingInstructio
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 
+// Modified:
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
@@ -63,6 +67,9 @@ checkBrowsers(paths.appPath, isInteractive)
     // Remove all content but keep the directory so that
     // if you're in it, you don't end up in Trash
     fs.emptyDirSync(paths.appBuild);
+
+    moveDependentFiles(); // Modified: This is added
+
     // Merge with the public folder
     // Modified: copyPublicFolder(); // No need to copy the public folder content
     // Start the webpack build
@@ -204,9 +211,26 @@ function build(previousFileSizes) {
   });
 }
 
+/*
+Modified:
 function copyPublicFolder() {
   fs.copySync(paths.appPublic, paths.appBuild, {
     dereference: true,
     filter: file => file !== paths.appHtml,
   });
+}*/
+
+// Modified:
+
+function moveDependentFiles() {
+  // Generate packiage.json inside build with required nodes alone
+  const { name, version, author, description, repository, keywords, license } = require(resolveApp('package.json'));//; fs.readFileSync('gitignorePath', "utf8")
+  const main = './index.js';
+  const packageJSON = { name, version, author, description, repository, keywords, license, main };
+  const str = JSON.stringify(packageJSON);
+  const packagePath = resolveApp('build/package.json');
+  fs.writeFileSync(packagePath, str);
+
+  fs.copyFileSync(resolveApp('README.md'), resolveApp('build/README.md'));
+  fs.copyFileSync(resolveApp('JE_Sample.PNG'), resolveApp('build/JE_Sample.PNG'));
 }

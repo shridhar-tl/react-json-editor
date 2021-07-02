@@ -1,6 +1,6 @@
 {
   "name": "reactjs-json-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Shridhar TL",
   "description": "A react component which is basically JavaScript Object editor which lets to edit any JSON compatible JavaScript object passed to it.",
   "repository": {

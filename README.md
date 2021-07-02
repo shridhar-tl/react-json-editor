@@ -19,7 +19,7 @@ Once installed you can import this component along with its styles and you are d
 ```jsx
 import React, { PureComponent } from 'react';
 import { JSONEditor } from 'reactjs-json-editor';
-import 'reactjs-json-editor/build/css/style.css';
+import 'reactjs-json-editor/css/style.css';
 
 class App extends PureComponent {
     state = {
