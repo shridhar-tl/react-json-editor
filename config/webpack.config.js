@@ -200,6 +200,11 @@ module.exports = function (webpackEnv) {
         : paths.appIndexJs,
     externals: [nodeExternals()], // Modified: This will ignore all node_modules from bundle
     output: {
+      /// Modified: Code added for exporting the package as library
+      library: isEnvProduction ? '' : undefined,
+      libraryTarget: isEnvProduction ? 'commonjs' : undefined,
+      /// End: Modification
+
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
       // Add /* filename */ comments to generated require()s in the output.

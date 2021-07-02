@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import JSONEditor from './components/JSONEditor';
+import { JSONEditor } from './components/JSONEditor';
 import './App.css';
 
 const sampleObject = {

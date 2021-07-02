@@ -28,4 +28,4 @@ JSONEditor.propTypes = {
     value: PropTypes.object
 };
 
-export default JSONEditor;
+export { JSONEditor };

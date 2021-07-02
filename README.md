@@ -10,7 +10,7 @@ https://chrome.google.com/webstore/detail/dev-assistant-modify-requ/omjocblcimog
 
 If you have an existing react application, run the following commands to download the JSON Editor component.
 ```
-npm i react-json-editor@latest --save
+npm i reactjs-json-editor@latest --save
 ```
 Once installed you can import this component along with its styles and you are done.
 
@@ -18,8 +18,8 @@ Once installed you can import this component along with its styles and you are d
 
 ```jsx
 import React, { PureComponent } from 'react';
-import JSONEditor from 'react-json-editor';
-import 'react-json-editor/css/style.css';
+import { JSONEditor } from 'reactjs-json-editor';
+import 'reactjs-json-editor/build/css/style.css';
 
 class App extends PureComponent {
     state = {
