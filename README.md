@@ -77,10 +77,12 @@ This component can be used in your page where you would like the JSON Editor to 
 | Params | Type | Default | Usage | Description |
 | ------ | ---- | ------------- | ----- | ----------- |
 | value | any | - | required | The Javascript object to be edited. This can be any object which is JSON compatible |
-| onChange | function | - | required | A callback function which would be called everytime the object is edited by the user |
-| ***editable* | bool | - | optional | This would let you to disable editing of the object and make the object readonly  |
-| ***allowRemove* | bool | - | optional | This would let you control if the user is allowed to remove the existing properties or not.  |
-| ***allowInsert* | bool | - | optional | This would let you control if the user is allowed to create a new property or not.  |
+| args | any | - | optional | This is just an identifier which can be useful when you want to use multiple instance of this component and when change even occur, this would be passed as 2nd argument to your callback function using which you can determine which instance is modified |
+| onChange | function | - | required | A callback function which would be called everytime the object is edited by the user. The callback's first argument would be the modified object and second argument is the same value passed to args props. If a function is not passed to this prop, then edit functionality would be disabled and the object passed would be readonly. |
+| allowEditKey | bool | true | optional | This would let you to disable editing of the object property key  |
+| allowEditValue | bool | true | optional | This would let you to disable editing of the object property value  |
+| allowRemove | bool | true | optional | This would let you control if the user is allowed to remove the existing properties or not.  |
+| allowInsert | bool | true | optional | This would let you control if the user is allowed to create a new property or not.  |
 | ***isValidName* | function | - | optional | This callback would help to validate if the user had provided a valid key name. This function would receive two params (i.e. name and path). Should return a boolean value indicating if the name is accepted or can return a modified name to set the new name |
 | ***parseValue* | function | - | optional | This callback would be called with the data the user has provided. You can parse the data and return appropriate object back. If this callback is used then datatype will not be auto detected. Instead, the value returned will be set. |
 

@@ -198,7 +198,7 @@ module.exports = function (webpackEnv) {
           // changing JS code would still trigger a refresh.
         ]
         : paths.appIndexJs,
-    externals: [nodeExternals()], // Modified: This will ignore all node_modules from bundle
+    externals: isEnvProduction ? [nodeExternals()] : undefined, // Modified: This will ignore all node_modules from bundle
     output: {
       /// Modified: Code added for exporting the package as library
       library: isEnvProduction ? '' : undefined,

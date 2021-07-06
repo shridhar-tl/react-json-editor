@@ -21,7 +21,11 @@ class ArrayEditor extends PureComponent {
         const { show } = this.state;
         if (!show && !this.keys) { return null; }
 
-        const { value } = this.props;
+        const {
+            value,
+            allowEditValue, allowEditKey,
+            allowRemove, allowInsert
+        } = this.props;
 
         if (this.value !== value) {
             this.value = value;
@@ -31,19 +35,28 @@ class ArrayEditor extends PureComponent {
                 return <Component key={k}
                     name={k} displayName={k.toString()}
                     value={val}
-                    onAddClicked={this.addClicked}
-                    onRemoveClicked={this.removeClicked}
+                    onAddClicked={allowInsert && this.addClicked}
+                    onRemoveClicked={allowRemove && this.removeClicked}
                     onChange={this.itemChanged}
+                    allowEditValue={allowEditValue}
+                    allowEditKey={allowEditKey}
+                    allowRemove={allowRemove}
+                    allowInsert={allowInsert}
                 />
             });
 
-            const newItem = <span className="je-icon je-add-new-item" />
-            const displayValue = <span className="je-add-item-text" title="Double click to add new item">&lt;&lt;add new item&gt;&gt;</span>
-            this.keys.push(<SimpleEditor key="newItem"
-                name={value.length} displayName={newItem} value=""
-                displayValue={displayValue}
-                onChange={this.itemChanged}
-            />)
+            if (allowInsert) {
+                const newItem = <span className="je-icon je-add-new-item" />
+                const displayValue = <span className="je-add-item-text" title="Double click to add new item">&lt;&lt;add new item&gt;&gt;</span>
+
+                this.keys.push(<SimpleEditor key="newItem"
+                    name={value.length} displayName={newItem} value=""
+                    displayValue={displayValue}
+                    onChange={this.itemChanged}
+                    allowEditKey={false}
+                    allowEditValue={true}
+                />);
+            }
         }
 
         return (<div className={"je-sub-items " + (show ? '' : ' closed')}>

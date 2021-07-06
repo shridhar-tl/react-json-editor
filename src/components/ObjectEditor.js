@@ -52,7 +52,11 @@ class ObjectEditor extends PureComponent {
         const { show } = this.state;
         if (!show && !this.keys) { return null; }
 
-        const { value } = this.props;
+        const {
+            value,
+            allowEditValue, allowEditKey,
+            allowRemove, allowInsert
+        } = this.props;
 
         if (this.value !== value) {
             this.value = value;
@@ -63,20 +67,29 @@ class ObjectEditor extends PureComponent {
                 return <Component key={k} name={k} value={val}
                     onChange={this.propChanged}
                     onNameChange={this.nameChanged}
-                    onRemoveClicked={this.removeClicked} />
+                    onRemoveClicked={allowRemove && this.removeClicked}
+                    allowEditValue={allowEditValue}
+                    allowEditKey={allowEditKey}
+                    allowRemove={allowRemove}
+                    allowInsert={allowInsert}
+                />
             });
 
-            const newItem = <span className="je-icon je-add-new-item" />
-            const displayName = <span className="je-add-item-text" title="Double click to add new property">{newItem} &lt;&lt;add new prop&gt;&gt;</span>
-            this.keys.push(<div className="je-item-block je-object">
-                <span>
-                    <ItemNameDisplay key="je-newProp001"
-                        display={displayName}
-                        onChange={this.nameChanged}
-                    />
-                    <span className="je-item-value null">null</span>
-                </span>
-            </div>);
+            if (allowInsert) {
+                const newItem = <span className="je-icon je-add-new-item" />
+                const displayName = <span className="je-add-item-text" title="Double click to add new property">{newItem} &lt;&lt;add new prop&gt;&gt;</span>
+
+                this.keys.push(<div className="je-item-block je-object" key="je-newProp001">
+                    <span>
+                        <ItemNameDisplay
+                            display={displayName}
+                            onChange={this.nameChanged}
+                            allowEdit={true}
+                        />
+                        <span className="je-item-value null">null</span>
+                    </span>
+                </div>);
+            }
         }
 
         return (<div className={"je-sub-items " + (show ? '' : ' closed')}>
@@ -85,14 +98,21 @@ class ObjectEditor extends PureComponent {
     }
 
     render() {
-        const { name, displayName, onAddClicked, onRemoveClicked } = this.props;
+        const {
+            name, displayName, onAddClicked, onRemoveClicked,
+            allowEditKey, allowRemove, allowInsert
+        } = this.props;
 
         return (
             <div className="je-item-block je-object">
                 <span>
                     <ItemNameDisplay name={name} display={displayName} expanded={this.state.show}
+                        allowEdit={allowEditKey}
                         onChange={this.nameChanged}
-                        onToggle={this.toggleItems} onAddClicked={onAddClicked} onRemoveClicked={onRemoveClicked} />
+                        onToggle={this.toggleItems}
+                        onAddClicked={allowInsert && onAddClicked}
+                        onRemoveClicked={allowRemove && onRemoveClicked}
+                    />
                     <span className="je-item-value object">Object <span className="object-curly" onClick={this.toggleItems}>{'{'}&hellip;{'}'}</span></span>
                 </span>
                 {this.getSubItems()}

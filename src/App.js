@@ -40,7 +40,12 @@ class App extends PureComponent {
     return (
       <div className="App">
         <header className="App-header">
-          <JSONEditor value={jsObject} onChange={this.jsObjChanged} />
+          <JSONEditor value={jsObject} onChange={this.jsObjChanged}
+            allowEditKey={true}
+            allowEditValue={true}
+            allowRemove={true}
+            allowInsert={true}
+          />
         </header>
       </div>
     );

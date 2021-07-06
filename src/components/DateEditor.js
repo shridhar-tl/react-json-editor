@@ -8,14 +8,18 @@ class DateEditor extends PureComponent {
 
     render() {
         let { name, value, displayName, onAddClicked, onRemoveClicked } = this.props;
+        const { allowEditValue, allowEditKey } = this.props;
 
         return (
             <div className="je-item-block je-date">
                 <span>
                     <ItemNameDisplay name={name} display={displayName}
+                        allowEdit={allowEditKey}
                         onChange={this.nameChanged}
                         onAddClicked={onAddClicked} onRemoveClicked={onRemoveClicked} />
-                    <ItemValueDisplay type="date" value={value.toJSON()} onChange={this.valueChanged} />
+                    <ItemValueDisplay
+                        allowEdit={allowEditValue}
+                        type="date" value={value.toJSON()} onChange={this.valueChanged} />
                 </span>
             </div>
         );

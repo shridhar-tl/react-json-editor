@@ -82,7 +82,7 @@ class ItemValueDisplay extends PureComponent {
     }
 
     render() {
-        const { value, displayValue = value, type } = this.props;
+        const { value, displayValue = value, type, allowEdit } = this.props;
         const { editing, editText } = this.state;
 
         if (editing) {
@@ -96,7 +96,7 @@ class ItemValueDisplay extends PureComponent {
                 ></textarea></span>
         }
 
-        return (<span className={"je-item-value " + type} onDoubleClick={this.beginEdit}>{displayValue}</span>);
+        return (<span className={"je-item-value " + type} onDoubleClick={allowEdit && this.beginEdit}>{displayValue}</span>);
     }
 }
 

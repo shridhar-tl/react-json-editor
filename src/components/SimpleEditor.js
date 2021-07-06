@@ -2,12 +2,7 @@ import React, { PureComponent } from 'react';
 import ItemNameDisplay from './ItemNameDisplay';
 import ItemValueDisplay from './ItemValueDisplay';
 
-const urlPattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+const urlPattern = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 function isUrl(value) { return !!urlPattern.test(value?.trim()); }
 
@@ -47,13 +42,19 @@ class SimpleEditor extends PureComponent {
             }
         }
 
+        const { allowEditValue, allowEditKey } = this.props;
+
         return (
             <div className={"je-item-block je-simple-" + type}>
                 <span>
                     <ItemNameDisplay name={name} display={displayName}
+                        allowEdit={allowEditKey}
                         onChange={this.nameChanged}
                         onAddClicked={onAddClicked} onRemoveClicked={onRemoveClicked} />
-                    <ItemValueDisplay type={type} displayValue={displayValue} value={value} onChange={this.valueChanged} />
+                    <ItemValueDisplay
+                        allowEdit={allowEditValue} type={type}
+                        displayValue={displayValue} value={value}
+                        onChange={this.valueChanged} />
                 </span>
             </div>
         );
